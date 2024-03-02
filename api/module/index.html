@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desencriptador</title>
+    <style>
+        /* Estilos aquí */
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        textarea {
+            width: 300px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Desencriptador</h1>
+        <textarea id="encryptedText" placeholder="Texto encriptado"></textarea>
+        <button onclick="desencriptar()">Desencriptar</button>
+        <textarea id="result"></textarea>
+    </div>
+    <script>
+        function desencriptar() {
+            var encryptedText = document.getElementById('encryptedText').value;
+            var resultContainer = document.getElementById('result');
+
+            // Crear una instancia del objeto XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+
+            // Configurar la solicitud
+            xhr.open('POST', 'def2.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // Definir la función de devolución de llamada cuando la solicitud esté completa
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Actualizar el contenedor de resultados con la respuesta del servidor
+                    resultContainer.textContent = xhr.responseText;
+                }
+            };
+
+            // Enviar la solicitud con el texto encriptado como datos
+            xhr.send('encryptedText=' + encodeURIComponent(encryptedText));
+        }
+    </script>
+</body>
+</html>
